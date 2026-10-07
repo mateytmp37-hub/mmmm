@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#071b35">
+<meta name="description" content="FOSTER ENGINEERING - งานวิศวกรรม ออกแบบ ผลิต ติดตั้ง และระบบอุตสาหกรรม">
+<title>FOSTER ENGINEERING | วิศวกรรมครบวงจร</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="./logo.png">
+<style>
+:root{
+ --navy:#06182d;--navy2:#0b2746;--blue:#0878d1;--cyan:#20b9ff;--red:#e51e3e;
+ --white:#fff;--soft:#f4f8fc;--text:#18283a;--muted:#6b7b8e;--line:#dce6f0;
+ --shadow:0 20px 60px rgba(7,31,58,.12);--radius:24px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Prompt',sans-serif;color:var(--text);background:#fff;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+button,input,textarea{font:inherit}
+.container{width:min(1180px,92%);margin:auto}
+section{position:relative;padding:105px 0}
+.section-head{text-align:center;max-width:760px;margin:0 auto 55px}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;color:var(--red);font-weight:600;letter-spacing:1px;font-size:14px;margin-bottom:13px}
+.eyebrow:before{content:"";width:34px;height:3px;background:var(--red);border-radius:9px}
+.section-head h2{font-family:'Kanit';font-size:clamp(34px,4vw,54px);line-height:1.08;color:var(--navy);margin-bottom:16px}
+.section-head p{color:var(--muted);line-height:1.9}
+.reveal{opacity:0;transform:translateY(35px);transition:1s cubic-bezier(.2,.7,.2,1)}
+.reveal.show{opacity:1;transform:none}
+
+/* loader */
+.loader{position:fixed;inset:0;background:var(--navy);z-index:9999;display:grid;place-items:center;transition:.7s}
+.loader.hide{opacity:0;visibility:hidden}
+.loader-box{text-align:center;color:white}
+.loader-mark{width:72px;height:72px;border:3px solid rgba(255,255,255,.2);border-top-color:var(--cyan);border-right-color:var(--red);border-radius:50%;animation:spin 1s linear infinite;margin:auto auto 18px}
+.loader-box span{font-family:'Kanit';letter-spacing:3px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* header */
+header{position:fixed;top:0;left:0;width:100%;z-index:1000;padding:17px 0;transition:.35s}
+header.scrolled{background:rgba(6,24,45,.92);backdrop-filter:blur(18px);padding:10px 0;box-shadow:0 10px 35px rgba(0,0,0,.12)}
+.nav{height:68px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;min-width:190px}
+.logo img{width:270px;height:75px;object-fit:contain;object-position:left center;filter:drop-shadow(0 5px 15px rgba(0,0,0,.12))}
+.logo-fallback{display:none;color:#fff;font-family:'Kanit';font-size:24px;font-weight:700;letter-spacing:1px}
+.nav-links{display:flex;align-items:center;gap:7px}
+.nav-links a{color:#fff;padding:11px 15px;border-radius:10px;font-size:14px;transition:.25s}
+.nav-links a:hover,.nav-links a.active{background:rgba(255,255,255,.1);color:#6ed3ff}
+.nav-cta{background:var(--red)!important;color:#fff!important;padding:12px 20px!important;box-shadow:0 8px 25px rgba(229,30,62,.3)}
+.menu-btn{display:none;background:none;border:0;color:#fff;font-size:30px;cursor:pointer}
+
+/* hero */
+.hero{min-height:100vh;padding:150px 0 70px;display:flex;align-items:center;background:var(--navy);overflow:hidden;color:#fff}
+.hero-bg{position:absolute;inset:0;background:
+linear-gradient(90deg,rgba(3,15,29,.96) 0%,rgba(3,18,35,.82) 44%,rgba(3,18,35,.25) 100%),
+url('https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=2200&q=85') center/cover}
+.hero-grid{position:absolute;width:100%;height:100%;opacity:.08;background-image:linear-gradient(rgba(255,255,255,.6) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.6) 1px,transparent 1px);background-size:65px 65px;transform:perspective(500px) rotateX(55deg) scale(1.8);transform-origin:center bottom}
+.hero-glow{position:absolute;width:550px;height:550px;border-radius:50%;background:#0878d1;filter:blur(130px);opacity:.22;right:-150px;bottom:-180px}
+.hero-content{position:relative;z-index:2;max-width:760px}
+.hero-kicker{display:inline-flex;align-items:center;gap:10px;padding:8px 15px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.07);border-radius:50px;backdrop-filter:blur(8px);margin-bottom:24px;color:#bfeaff;font-size:13px}
+.hero-kicker i{width:8px;height:8px;background:#4fe1a1;border-radius:50%;box-shadow:0 0 15px #4fe1a1}
+.hero h1{font-family:'Kanit';font-size:clamp(48px,7vw,88px);line-height:.98;margin-bottom:25px;letter-spacing:-1px}
+.hero h1 span{color:#48c8ff}
+.hero h1 em{font-style:normal;color:#ff536d}
+.hero p{font-size:18px;line-height:1.9;color:#d2dfed;max-width:680px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:14px 23px;border-radius:12px;border:1px solid transparent;cursor:pointer;transition:.3s;font-weight:500}
+.btn-primary{background:var(--red);color:#fff;box-shadow:0 12px 30px rgba(229,30,62,.3)}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 17px 38px rgba(229,30,62,.4)}
+.btn-light{border-color:rgba(255,255,255,.25);color:#fff;background:rgba(255,255,255,.06);backdrop-filter:blur(8px)}
+.btn-light:hover{background:#fff;color:var(--navy)}
+.hero-mini{display:flex;gap:28px;margin-top:55px;padding-top:25px;border-top:1px solid rgba(255,255,255,.14)}
+.hero-mini div strong{font-family:'Kanit';font-size:26px;display:block}
+.hero-mini div span{font-size:12px;color:#9fb1c5}
+.scroll-indicator{position:absolute;right:4%;bottom:35px;writing-mode:vertical-rl;color:#91a8bf;font-size:11px;letter-spacing:2px}
+
+/* floating cards */
+.float-card{position:absolute;z-index:3;right:7%;top:29%;width:265px;padding:22px;border-radius:22px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(18px);box-shadow:0 30px 70px rgba(0,0,0,.2);animation:float 5s ease-in-out infinite}
+.float-card .icon{width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#0a8fe8,#64d6ff);display:grid;place-items:center;font-size:24px;margin-bottom:16px}
+.float-card b{font-family:'Kanit';font-size:20px}
+.float-card p{font-size:12px;color:#c3d3e2;line-height:1.7;margin-top:5px}
+.float-line{height:5px;background:rgba(255,255,255,.13);border-radius:10px;margin-top:18px;overflow:hidden}
+.float-line span{display:block;width:82%;height:100%;background:linear-gradient(90deg,#20b9ff,#6ee4ff);border-radius:10px}
+@keyframes float{50%{transform:translateY(-15px)}}
+
+/* stats */
+.stats{margin-top:-1px;background:#fff;position:relative;z-index:5}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);box-shadow:var(--shadow);border-radius:20px;overflow:hidden;margin-top:-55px}
+.stat{background:#fff;padding:32px 20px;text-align:center;border-right:1px solid var(--line)}
+.stat:last-child{border:0}
+.stat strong{font-family:'Kanit';font-size:42px;color:var(--navy)}
+.stat strong small{font-size:22px;color:var(--blue)}
+.stat span{display:block;color:var(--muted);font-size:13px;margin-top:4px}
+
+/* about */
+.about{background:var(--soft)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:75px;align-items:center}
+.about-visual{position:relative;padding:18px}
+.about-img{height:570px;border-radius:28px;overflow:hidden;box-shadow:var(--shadow)}
+.about-img img{width:100%;height:100%;object-fit:cover;transition:1s}
+.about-visual:hover .about-img img{transform:scale(1.05)}
+.experience{position:absolute;left:-5px;bottom:48px;background:var(--red);color:#fff;border-radius:18px;padding:22px 25px;box-shadow:0 18px 35px rgba(229,30,62,.28)}
+.experience strong{font-family:'Kanit';font-size:38px;display:block;line-height:1}
+.experience span{font-size:12px}
+.about-badge{position:absolute;right:-4px;top:45px;background:#fff;padding:18px;border-radius:17px;box-shadow:var(--shadow);font-size:12px}
+.about-badge b{color:var(--blue);display:block;font-size:22px}
+.about-copy h3{font-family:'Kanit';font-size:38px;color:var(--navy);line-height:1.2;margin-bottom:18px}
+.about-copy>p{color:var(--muted);line-height:1.95}
+.check-list{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin:28px 0}
+.check-list div{font-size:14px;font-weight:500}
+.check-list i{font-style:normal;color:#11a96b;margin-right:8px}
+.signature{display:flex;align-items:center;gap:15px;padding-top:20px;border-top:1px solid var(--line)}
+.signature-mark{font-family:cursive;font-size:24px;color:var(--navy)}
+.signature span{font-size:11px;color:var(--muted)}
+
+/* services */
+.services{background:#fff}
+.service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.service-card{position:relative;min-height:390px;border-radius:23px;overflow:hidden;color:#fff;box-shadow:0 15px 45px rgba(5,29,54,.1)}
+.service-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:.7s}
+.service-card:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(3,17,32,.95),rgba(3,17,32,.08) 75%)}
+.service-card:hover img{transform:scale(1.1)}
+.service-content{position:absolute;z-index:2;bottom:0;padding:27px}
+.service-no{font-size:12px;color:#7ddcff;letter-spacing:2px}
+.service-card h3{font-family:'Kanit';font-size:28px;margin:6px 0}
+.service-card p{font-size:13px;line-height:1.7;color:#d3e0ed}
+.service-link{display:inline-flex;margin-top:16px;color:#fff;font-size:13px;gap:7px}
+
+/* capabilities */
+.capabilities{background:var(--navy);color:#fff;overflow:hidden}
+.capabilities:before{content:"";position:absolute;width:700px;height:700px;border-radius:50%;border:1px solid rgba(255,255,255,.06);right:-250px;top:-250px}
+.cap-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:75px;align-items:center}
+.capabilities .section-head{text-align:left;margin:0 0 35px}
+.capabilities .section-head h2{color:#fff}
+.capabilities .section-head p{color:#9db1c5}
+.cap-list{display:grid;gap:14px}
+.cap-item{display:grid;grid-template-columns:58px 1fr;gap:16px;padding:18px;border:1px solid rgba(255,255,255,.1);border-radius:17px;background:rgba(255,255,255,.035);transition:.3s}
+.cap-item:hover{transform:translateX(7px);background:rgba(255,255,255,.07)}
+.cap-icon{width:48px;height:48px;border-radius:13px;background:rgba(32,185,255,.12);display:grid;place-items:center;font-size:21px;color:#55d1ff}
+.cap-item h4{font-family:'Kanit';font-size:18px}
+.cap-item p{font-size:12px;color:#91a8bf;line-height:1.7;margin-top:3px}
+.cap-photo{position:relative}
+.cap-photo img{height:600px;width:100%;object-fit:cover;border-radius:28px;opacity:.9}
+.cap-photo:after{content:"";position:absolute;inset:0;border-radius:28px;background:linear-gradient(135deg,rgba(8,120,209,.15),transparent)}
+.tech-tag{position:absolute;left:25px;bottom:25px;padding:17px 20px;border-radius:15px;background:rgba(5,20,38,.82);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.14)}
+.tech-tag b{font-family:'Kanit';font-size:22px;display:block}
+.tech-tag span{font-size:11px;color:#9eb2c6}
+
+/* industries */
+.industries{background:var(--soft)}
+.industry-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.industry{height:280px;border-radius:20px;overflow:hidden;position:relative;color:#fff}
+.industry img{width:100%;height:100%;object-fit:cover;transition:.6s}
+.industry:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(2,16,31,.9),transparent 65%)}
+.industry:hover img{transform:scale(1.08)}
+.industry div{position:absolute;z-index:2;left:20px;right:20px;bottom:20px}
+.industry b{font-family:'Kanit';font-size:22px}
+.industry p{font-size:11px;color:#c9d6e3;margin-top:3px}
+
+/* projects */
+.projects{background:#fff}
+.filter{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:35px}
+.filter button{border:1px solid var(--line);background:#fff;color:var(--muted);padding:10px 17px;border-radius:50px;cursor:pointer;transition:.25s}
+.filter button.active,.filter button:hover{background:var(--navy);border-color:var(--navy);color:#fff}
+.project-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+.project{position:relative;height:330px;border-radius:21px;overflow:hidden;cursor:pointer;grid-column:span 4}
+.project:nth-child(1){grid-column:span 7}
+.project:nth-child(2){grid-column:span 5}
+.project img{width:100%;height:100%;object-fit:cover;transition:.7s}
+.project:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(2,15,29,.93),transparent 65%)}
+.project:hover img{transform:scale(1.08)}
+.project-info{position:absolute;z-index:2;bottom:0;padding:24px;color:#fff;width:100%}
+.project-info small{color:#70d8ff}
+.project-info h3{font-family:'Kanit';font-size:24px}
+.project-info p{font-size:11px;color:#c4d2df;margin-top:3px}
+.project-arrow{position:absolute;right:22px;bottom:23px;width:38px;height:38px;border-radius:50%;background:#fff;color:var(--navy);display:grid;place-items:center;z-index:3}
+
+/* gallery */
+.gallery{background:var(--soft)}
+.gallery-grid{columns:3 280px;column-gap:16px}
+.gallery-item{break-inside:avoid;margin-bottom:16px;position:relative;border-radius:17px;overflow:hidden;cursor:pointer}
+.gallery-item img{width:100%;transition:.6s}
+.gallery-item:after{content:"ดูภาพ";position:absolute;inset:auto 12px 12px auto;background:rgba(0,0,0,.65);color:#fff;padding:7px 11px;border-radius:20px;font-size:11px;opacity:0;transition:.3s}
+.gallery-item:hover img{transform:scale(1.04)}
+.gallery-item:hover:after{opacity:1}
+
+/* testimonials */
+.testimonials{background:#fff}
+.quote-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.quote{padding:30px;border:1px solid var(--line);border-radius:20px;background:#fff;box-shadow:0 10px 35px rgba(7,31,58,.05)}
+.stars{color:#ffb000;letter-spacing:2px}
+.quote p{font-size:14px;line-height:1.9;color:var(--muted);margin:18px 0}
+.quote-user{display:flex;gap:12px;align-items:center}
+.avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--navy);color:#fff;font-family:'Kanit'}
+.quote-user b{font-size:13px;display:block}
+.quote-user span{font-size:10px;color:var(--muted)}
+
+/* contact */
+.contact{background:linear-gradient(135deg,#06182d,#0b3154);color:#fff;overflow:hidden}
+.contact:before{content:"";position:absolute;width:500px;height:500px;border-radius:50%;border:1px solid rgba(255,255,255,.08);right:-180px;top:-170px}
+.contact-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:70px;align-items:start}
+.contact h2{font-family:'Kanit';font-size:48px;line-height:1.1;margin:10px 0 18px}
+.contact-copy>p{color:#9fb4c9;line-height:1.9}
+.contact-items{display:grid;gap:15px;margin-top:28px}
+.contact-item{display:flex;gap:13px;align-items:center}
+.contact-icon{width:43px;height:43px;border-radius:12px;background:rgba(255,255,255,.08);display:grid;place-items:center;color:#5ed4ff}
+.contact-item span{font-size:12px;color:#9fb4c9}
+.contact-item b{display:block;font-size:14px}
+.form{padding:32px;border-radius:25px;background:#fff;color:var(--text);box-shadow:0 25px 70px rgba(0,0,0,.2)}
+.form h3{font-family:'Kanit';font-size:28px;color:var(--navy);margin-bottom:20px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field{margin-bottom:14px}
+.field.full{grid-column:1/-1}
+.field label{font-size:11px;color:var(--muted);display:block;margin-bottom:6px}
+.field input,.field textarea{width:100%;border:1px solid var(--line);border-radius:11px;padding:12px 13px;outline:0;transition:.2s;background:#fbfdff}
+.field input:focus,.field textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(8,120,209,.1)}
+.field textarea{height:120px;resize:vertical}
+.form .btn{width:100%}
+
+/* footer */
+footer{background:#03101f;color:#8ca0b4;padding:65px 0 25px}
+.footer-grid{display:grid;grid-template-columns:1.3fr .7fr .7fr .9fr;gap:45px}
+.footer-logo img{width:210px;height:60px;object-fit:contain;object-position:left}
+.footer-desc{font-size:12px;line-height:1.9;margin-top:15px;max-width:330px}
+footer h4{font-family:'Kanit';font-size:18px;color:#fff;margin-bottom:16px}
+.footer-links{display:grid;gap:9px;font-size:12px}
+.footer-links a:hover{color:#55d1ff}
+.socials{display:flex;gap:9px}
+.socials a{width:39px;height:39px;border-radius:10px;background:rgba(255,255,255,.06);display:grid;place-items:center;color:#fff;transition:.25s}
+.socials a:hover{background:var(--red);transform:translateY(-3px)}
+.copyright{border-top:1px solid rgba(255,255,255,.08);margin-top:45px;padding-top:20px;font-size:10px;display:flex;justify-content:space-between;gap:20px}
+
+/* modal / lightbox */
+.modal{position:fixed;inset:0;background:rgba(0,8,18,.86);backdrop-filter:blur(10px);z-index:3000;display:none;place-items:center;padding:20px}
+.modal.open{display:grid}
+.modal-box{width:min(950px,96vw);max-height:90vh;overflow:auto;background:#fff;border-radius:25px;position:relative}
+.modal-img{width:100%;height:440px;object-fit:cover}
+.modal-body{padding:28px}
+.modal-body h3{font-family:'Kanit';font-size:32px;color:var(--navy)}
+.modal-body p{color:var(--muted);line-height:1.9;margin-top:8px}
+.modal-close{position:absolute;right:16px;top:16px;width:42px;height:42px;border:0;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;font-size:22px;cursor:pointer;z-index:2}
+.lightbox img{max-height:80vh;max-width:92vw;border-radius:16px}
+.lightbox .modal-close{top:20px;right:25px}
+
+/* top */
+.top{position:fixed;right:22px;bottom:22px;width:46px;height:46px;border:0;border-radius:50%;background:var(--red);color:#fff;z-index:900;cursor:pointer;box-shadow:0 10px 25px rgba(229,30,62,.3);opacity:0;transform:translateY(15px);transition:.3s}
+.top.show{opacity:1;transform:none}
+
+/* responsive */
+@media(max-width:1050px){
+ .nav-links a{padding:9px 9px;font-size:12px}.float-card{right:3%;width:220px}
+ .about-grid,.cap-grid,.contact-grid{gap:35px}.service-grid{grid-template-columns:repeat(2,1fr)}
+ .industry-grid{grid-template-columns:repeat(2,1fr)}.footer-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:780px){
+ section{padding:75px 0}.menu-btn{display:block}.nav-links{position:absolute;top:82px;left:4%;right:4%;display:none;flex-direction:column;align-items:stretch;background:rgba(5,22,41,.98);padding:12px;border-radius:18px;box-shadow:0 20px 50px rgba(0,0,0,.3)}
+ .nav-links.open{display:flex}.nav-links a{text-align:center}.nav-cta{margin-top:4px}
+ .logo img{width:220px}.hero{padding-top:130px}.float-card{display:none}.hero-mini{gap:18px}
+ .stats-grid{grid-template-columns:1fr 1fr;margin-top:-30px}.stat{padding:23px 10px}.stat strong{font-size:31px}
+ .about-grid,.cap-grid,.contact-grid{grid-template-columns:1fr}.about-img{height:450px}.cap-photo{order:-1}.cap-photo img{height:420px}
+ .service-grid,.quote-grid{grid-template-columns:1fr}.service-card{min-height:340px}
+ .project{grid-column:span 12!important;height:280px}.industry-grid{grid-template-columns:1fr 1fr}
+ .contact h2{font-size:39px}.footer-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:500px){
+ .hero h1{font-size:48px}.hero p{font-size:14px}.hero-mini{display:grid;grid-template-columns:1fr 1fr}
+ .stats-grid{grid-template-columns:1fr 1fr}.stat strong{font-size:28px}.check-list{grid-template-columns:1fr}
+ .industry-grid{grid-template-columns:1fr}.industry{height:230px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}
+ .footer-grid{grid-template-columns:1fr}.copyright{display:block}.copyright span{display:block;margin-top:8px}
+}
+</style>
+</head>
+<body>
+
+<div class="loader" id="loader"><div class="loader-box"><div class="loader-mark"></div><span>FOSTER ENGINEERING</span></div></div>
+
+<header id="header">
+ <div class="container nav">
+  <a href="#home" class="logo">
+   <img src="./logo.png" alt="FOSTER ENGINEERING" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+   <span class="logo-fallback">FOSTER ENGINEERING</span>
+  </a>
+  <button class="menu-btn" id="menuBtn" aria-label="เปิดเมนู">☰</button>
+  <nav class="nav-links" id="navLinks">
+   <a href="#home" class="active">หน้าแรก</a>
+   <a href="#about">เกี่ยวกับเรา</a>
+   <a href="#services">บริการ</a>
+   <a href="#capabilities">ความเชี่ยวชาญ</a>
+   <a href="#projects">ผลงาน</a>
+   <a href="#gallery">แกลเลอรี</a>
+   <a href="#contact" class="nav-cta">ติดต่อเรา</a>
+  </nav>
+ </div>
+</header>
+
+<main>
+<section class="hero" id="home">
+ <div class="hero-bg"></div><div class="hero-grid"></div><div class="hero-glow"></div>
+ <div class="container">
+  <div class="hero-content reveal">
+   <div class="hero-kicker"><i></i> ENGINEERING • DESIGN • INSTALLATION</div>
+   <h1>สร้างระบบวิศวกรรม<br><span>ให้ทำงานได้จริง</span><br>ด้วย <em>ความแม่นยำ</em></h1>
+   <p>FOSTER ENGINEERING ให้บริการด้านวิศวกรรมแบบครบวงจร ตั้งแต่การออกแบบ ผลิต ติดตั้ง ไปจนถึงการปรับปรุงระบบ เพื่อให้ทุกโครงการตอบโจทย์การใช้งานจริงและเติบโตไปพร้อมกับธุรกิจ</p>
+   <div class="hero-actions">
+    <a href="#projects" class="btn btn-primary">ดูผลงานของเรา →</a>
+    <a href="#contact" class="btn btn-light">พูดคุยกับวิศวกร</a>
+   </div>
+   <div class="hero-mini">
+    <div><strong>01</strong><span>DESIGN & ENGINEERING</span></div>
+    <div><strong>02</strong><span>FABRICATION</span></div>
+    <div><strong>03</strong><span>INSTALLATION</span></div>
+   </div>
+  </div>
+ </div>
+ <div class="float-card">
+  <div class="icon">⚙</div><b>Engineering Precision</b>
+  <p>ออกแบบโดยคำนึงถึงประสิทธิภาพ ความปลอดภัย และการบำรุงรักษา</p>
+  <div class="float-line"><span></span></div>
+ </div>
+ <div class="scroll-indicator">SCROLL TO EXPLORE ↓</div>
+</section>
+
+<section class="stats">
+ <div class="container">
+  <div class="stats-grid reveal">
+   <div class="stat"><strong data-count="15">0</strong><small>+</small><span>ปีประสบการณ์</span></div>
+   <div class="stat"><strong data-count="120">0</strong><small>+</small><span>โครงการ</span></div>
+   <div class="stat"><strong data-count="98">0</strong><small>%</small><span>ส่งมอบตรงเวลา</span></div>
+   <div class="stat"><strong data-count="24">0</strong><small>/7</small><span>พร้อมดูแลระบบ</span></div>
+  </div>
+ </div>
+</section>
+
+<section class="about" id="about">
+ <div class="container about-grid">
+  <div class="about-visual reveal">
+   <div class="about-img"><img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=85" alt="วิศวกรกำลังทำงาน"></div>
+   <div class="experience"><strong>15+</strong><span>YEARS EXPERIENCE</span></div>
+   <div class="about-badge"><b>QUALITY</b>Engineering you can trust</div>
+  </div>
+  <div class="about-copy reveal">
+   <div class="eyebrow">ABOUT FOSTER</div>
+   <h3>เราไม่ได้แค่สร้างเครื่องจักร<br>แต่เราสร้าง “โซลูชัน”</h3>
+   <p>เรามุ่งมั่นนำความรู้ด้านวิศวกรรมมาผสมผสานกับเทคโนโลยีสมัยใหม่ เพื่อพัฒนาระบบที่เหมาะกับความต้องการของแต่ละองค์กร ตั้งแต่แนวคิดแรกจนถึงการติดตั้งและดูแลหลังการส่งมอบ</p>
+   <div class="check-list">
+    <div><i>✓</i> ออกแบบตามการใช้งานจริง</div>
+    <div><i>✓</i> ผลิตและประกอบอย่างเป็นระบบ</div>
+    <div><i>✓</i> ควบคุมคุณภาพทุกขั้นตอน</div>
+    <div><i>✓</i> บริการหลังการขาย</div>
+   </div>
+   <div class="signature"><div class="signature-mark">FOSTER</div><span>ENGINEERING<br>Professional Engineering Solutions</span></div>
+  </div>
+ </div>
+</section>
+
+<section class="services" id="services">
+ <div class="container">
+  <div class="section-head reveal">
+   <div class="eyebrow">OUR SERVICES</div>
+   <h2>บริการวิศวกรรมครบวงจร</h2>
+   <p>ดูแลโครงการตั้งแต่การออกแบบไปจนถึงการติดตั้ง โดยทีมงานที่เข้าใจทั้งด้านวิศวกรรมและการใช้งานจริง</p>
+  </div>
+  <div class="service-grid">
+   <article class="service-card reveal"><img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=900&q=85" alt=""><div class="service-content"><span class="service-no">01 / DESIGN</span><h3>ออกแบบวิศวกรรม</h3><p>ออกแบบเครื่องจักร ระบบ และโครงสร้างให้เหมาะสมกับพื้นที่และกระบวนการผลิต</p><a class="service-link" href="#contact">สอบถามบริการ →</a></div></article>
+   <article class="service-card reveal"><img src="https://images.unsplash.com/photo-1565439394683-2b9a9fdbe0f6?auto=format&fit=crop&w=900&q=85" alt=""><div class="service-content"><span class="service-no">02 / FABRICATION</span><h3>ผลิตและประกอบ</h3><p>ผลิตชิ้นส่วน โครงสร้าง และเครื่องจักร พร้อมควบคุมคุณภาพก่อนส่งมอบ</p><a class="service-link" href="#contact">สอบถามบริการ →</a></div></article>
+   <article class="service-card reveal"><img src="https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=900&q=85" alt=""><div class="service-content"><span class="service-no">03 / INSTALLATION</span><h3>ติดตั้งระบบ</h3><p>ติดตั้งและทดสอบระบบหน้างาน พร้อมตรวจสอบการทำงานให้เป็นไปตามข้อกำหนด</p><a class="service-link" href="#contact">สอบถามบริการ →</a></div></article>
+   <article class="service-card reveal"><img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=900&q=85" alt=""><div class="service-content"><span class="service-no">04 / AUTOMATION</span><h3>ระบบอัตโนมัติ</h3><p>ประยุกต์ใช้ระบบควบคุม เซนเซอร์ และเทคโนโลยีเพื่อเพิ่มประสิทธิภาพการทำงาน</p><a class="service-link" href="#contact">สอบถามบริการ →</a></div></article>
+   <article class="service-card reveal"><img src="https://images.unsplash.com/photo-1581092919535-7146b4f1f2b8?auto=format&fit=crop&w=900&q=85" alt=""><div class="service-content"><span class="service-no">05 / MAINTENANCE</span><h3>ปรับปรุงและบำรุงรักษา</h3><p>ตรวจสอบ วิเคราะห์ปัญหา และปรับปรุงระบบเดิมให้ทำงานได้อย่างมีประสิทธิภาพ</p><a class="service-link" href="#contact">สอบถามบริการ →</a></div></article>
+   <article class="service-card reveal"><img src="https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&w=900&q=85" alt=""><div class="service-content"><span class="service-no">06 / CONSULTING</span><h3>ที่ปรึกษาวิศวกรรม</h3><p>ให้คำปรึกษาและวางแนวทางแก้ปัญหาด้านวิศวกรรมสำหรับโครงการใหม่และระบบเดิม</p><a class="service-link" href="#contact">สอบถามบริการ →</a></div></article>
+  </div>
+ </div>
+</section>
+
+<section class="capabilities" id="capabilities">
+ <div class="container cap-grid">
+  <div class="reveal">
+   <div class="section-head">
+    <div class="eyebrow">CAPABILITIES</div><h2>เทคโนโลยีที่เปลี่ยนไอเดียให้เป็นของจริง</h2>
+    <p>เราเลือกใช้เทคโนโลยีและกระบวนการที่เหมาะกับแต่ละโครงการ เพื่อให้ได้ระบบที่มีประสิทธิภาพและดูแลต่อได้ง่าย</p>
+   </div>
+   <div class="cap-list">
+    <div class="cap-item"><div class="cap-icon">⌁</div><div><h4>3D Engineering Design</h4><p>วางโครงสร้างและตรวจสอบแนวคิดก่อนเริ่มผลิตจริง</p></div></div>
+    <div class="cap-item"><div class="cap-icon">⚙</div><div><h4>Machine & Fabrication</h4><p>ผลิตชิ้นส่วนและประกอบเครื่องจักรตามแบบงาน</p></div></div>
+    <div class="cap-item"><div class="cap-icon">⌁</div><div><h4>Automation & Control</h4><p>ระบบควบคุม เซนเซอร์ และการเชื่อมต่อข้อมูล</p></div></div>
+    <div class="cap-item"><div class="cap-icon">✓</div><div><h4>Testing & Commissioning</h4><p>ทดสอบระบบก่อนส่งมอบและตรวจสอบการทำงานหน้างาน</p></div></div>
+   </div>
+  </div>
+  <div class="cap-photo reveal"><img src="https://images.unsplash.com/photo-1565610222536-ef125c59da2e?auto=format&fit=crop&w=1200&q=85" alt="เครื่องจักรและงานวิศวกรรม"><div class="tech-tag"><b>SMART ENGINEERING</b><span>DESIGN • BUILD • IMPROVE</span></div></div>
+ </div>
+</section>
+
+<section class="industries" id="industries">
+ <div class="container">
+  <div class="section-head reveal"><div class="eyebrow">INDUSTRIES</div><h2>รองรับงานหลากหลายอุตสาหกรรม</h2><p>ประยุกต์โซลูชันให้เข้ากับลักษณะงาน กระบวนการผลิต และเป้าหมายของแต่ละองค์กร</p></div>
+  <div class="industry-grid">
+   <div class="industry reveal"><img src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=700&q=85" alt=""><div><b>Manufacturing</b><p>ระบบและเครื่องจักรสำหรับการผลิต</p></div></div>
+   <div class="industry reveal"><img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=700&q=85" alt=""><div><b>Warehouse</b><p>คลังสินค้าและระบบลำเลียง</p></div></div>
+   <div class="industry reveal"><img src="https://images.unsplash.com/photo-1513828583688-c52646db42da?auto=format&fit=crop&w=700&q=85" alt=""><div><b>Energy</b><p>ระบบพลังงานและสาธารณูปโภค</p></div></div>
+   <div class="industry reveal"><img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=700&q=85" alt=""><div><b>Construction</b><p>โครงสร้างและงานระบบอาคาร</p></div></div>
+  </div>
+ </div>
+</section>
+
+<section class="projects" id="projects">
+ <div class="container">
+  <div class="section-head reveal"><div class="eyebrow">SELECTED PROJECTS</div><h2>ผลงานที่เราออกแบบและสร้าง</h2><p>ตัวอย่างรูปแบบงานที่สามารถนำไปประยุกต์ใช้กับโครงการของคุณได้</p></div>
+  <div class="filter reveal">
+   <button class="active" data-filter="all">ทั้งหมด</button><button data-filter="machine">เครื่องจักร</button><button data-filter="automation">Automation</button><button data-filter="structure">โครงสร้าง</button>
+  </div>
+  <div class="project-grid">
+   <article class="project reveal" data-cat="machine" data-title="ระบบเครื่องจักรอุตสาหกรรม" data-desc="ออกแบบและพัฒนาระบบเครื่องจักรเพื่อเพิ่มประสิทธิภาพกระบวนการผลิต"><img src="https://images.unsplash.com/photo-1581091226825-c6a0b7c5e7d5?auto=format&fit=crop&w=1300&q=85" alt=""><div class="project-info"><small>MACHINE SYSTEM</small><h3>ระบบเครื่องจักรอุตสาหกรรม</h3><p>Design • Fabrication • Installation</p></div><div class="project-arrow">↗</div></article>
+   <article class="project reveal" data-cat="automation" data-title="ระบบ Automation & Control" data-desc="เชื่อมต่ออุปกรณ์ควบคุมและเซนเซอร์ เพื่อเพิ่มประสิทธิภาพและติดตามข้อมูล"><img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1100&q=85" alt=""><div class="project-info"><small>AUTOMATION</small><h3>ระบบ Automation & Control</h3><p>Control • Sensor • Monitoring</p></div><div class="project-arrow">↗</div></article>
+   <article class="project reveal" data-cat="structure" data-title="งานโครงสร้างวิศวกรรม" data-desc="ออกแบบและผลิตโครงสร้างให้เหมาะสมกับพื้นที่และการใช้งาน"><img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1100&q=85" alt=""><div class="project-info"><small>STRUCTURE</small><h3>งานโครงสร้างวิศวกรรม</h3><p>Steel • Fabrication • Installation</p></div><div class="project-arrow">↗</div></article>
+   <article class="project reveal" data-cat="machine" data-title="ระบบลำเลียงและขนถ่าย" data-desc="ออกแบบระบบลำเลียงให้เหมาะกับกระบวนการผลิตและพื้นที่หน้างาน"><img src="https://images.unsplash.com/photo-1590496793929-36417d3117de?auto=format&fit=crop&w=1100&q=85" alt=""><div class="project-info"><small>CONVEYOR</small><h3>ระบบลำเลียงและขนถ่าย</h3><p>Conveyor • Material Handling</p></div><div class="project-arrow">↗</div></article>
+  </div>
+ </div>
+</section>
+
+<section class="gallery" id="gallery">
+ <div class="container">
+  <div class="section-head reveal"><div class="eyebrow">ENGINEERING GALLERY</div><h2>ภาพบรรยากาศงานจริง</h2><p>เพิ่มภาพให้เว็บไซต์มีมิติและช่วยให้ลูกค้าเห็นบรรยากาศของงานวิศวกรรมมากขึ้น</p></div>
+  <div class="gallery-grid">
+   <div class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=900&q=85" alt="งานวิศวกรรม"></div>
+   <div class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=900&q=85" alt="วิศวกร"></div>
+   <div class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=900&q=85" alt="เครื่องจักร"></div>
+   <div class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=900&q=85" alt="โรงงาน"></div>
+   <div class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=900&q=85" alt="การติดตั้ง"></div>
+   <div class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1565610222536-ef125c59da2e?auto=format&fit=crop&w=900&q=85" alt="เทคโนโลยี"></div>
+  </div>
+ </div>
+</section>
+
+<section class="testimonials">
+ <div class="container">
+  <div class="section-head reveal"><div class="eyebrow">WHY CLIENTS CHOOSE US</div><h2>ทำงานอย่างมืออาชีพตั้งแต่ต้นจนจบ</h2><p>เราให้ความสำคัญกับคุณภาพ ความชัดเจนในการทำงาน และความสัมพันธ์ระยะยาวกับลูกค้า</p></div>
+  <div class="quote-grid">
+   <div class="quote reveal"><div class="stars">★★★★★</div><p>“ให้คำแนะนำได้ตรงกับปัญหา และสามารถนำแนวคิดไปพัฒนาต่อเป็นงานจริงได้”</p><div class="quote-user"><div class="avatar">C</div><div><b>Project Client</b><span>Engineering Project</span></div></div></div>
+   <div class="quote reveal"><div class="stars">★★★★★</div><p>“ขั้นตอนการทำงานเป็นระบบ สื่อสารง่าย และให้ความสำคัญกับรายละเอียดของงาน”</p><div class="quote-user"><div class="avatar">P</div><div><b>Project Client</b><span>Industrial System</span></div></div></div>
+   <div class="quote reveal"><div class="stars">★★★★★</div><p>“ทีมงานช่วยแก้ปัญหาหน้างานได้ดี และให้ความสำคัญกับความปลอดภัยในการติดตั้ง”</p><div class="quote-user"><div class="avatar">E</div><div><b>Project Client</b><span>Automation Project</span></div></div></div>
+  </div>
+ </div>
+</section>
+
+<section class="contact" id="contact">
+ <div class="container contact-grid">
+  <div class="contact-copy reveal">
+   <div class="eyebrow">LET'S BUILD TOGETHER</div>
+   <h2>มีโปรเจกต์อยู่ในมือ?<br>คุยกับเราได้เลย</h2>
+   <p>ส่งรายละเอียดเบื้องต้นมาให้เรา ทีมงานจะช่วยวิเคราะห์แนวทางและพูดคุยถึงความเป็นไปได้ของโครงการ</p>
+   <div class="contact-items">
+    <div class="contact-item"><div class="contact-icon">⌖</div><div><span>ADDRESS</span><b>ใส่ที่อยู่จริงของบริษัทที่นี่</b></div></div>
+    <div class="contact-item"><div class="contact-icon">☎</div><div><span>PHONE</span><b>+66 XX XXX XXXX</b></div></div>
+    <div class="contact-item"><div class="contact-icon">✉</div><div><span>EMAIL</span><b>info@yourcompany.com</b></div></div>
+   </div>
+  </div>
+  <form class="form reveal" id="contactForm">
+   <h3>ส่งข้อความถึงเรา</h3>
+   <div class="form-grid">
+    <div class="field"><label>ชื่อ - นามสกุล</label><input required name="name" placeholder="กรอกชื่อของคุณ"></div>
+    <div class="field"><label>เบอร์โทรศัพท์</label><input required name="phone" placeholder="08x-xxx-xxxx"></div>
+    <div class="field"><label>อีเมล</label><input type="email" name="email" placeholder="example@email.com"></div>
+    <div class="field"><label>ประเภทงาน</label><input name="type" placeholder="เช่น Automation / Machine"></div>
+    <div class="field full"><label>รายละเอียดโครงการ</label><textarea required name="message" placeholder="อธิบายสิ่งที่ต้องการให้เราช่วย..."></textarea></div>
+    <div class="field full"><button class="btn btn-primary" type="submit">ส่งข้อมูลโครงการ →</button></div>
+   </div>
+  </form>
+ </div>
+</section>
+</main>
+
+<footer>
+ <div class="container">
+  <div class="footer-grid">
+   <div><a class="footer-logo" href="#home"><img src="./logo.png" alt="FOSTER ENGINEERING" onerror="this.style.visibility='hidden'"></a><p class="footer-desc">FOSTER ENGINEERING — Engineering Solutions ที่ผสานการออกแบบ การผลิต เทคโนโลยี และการติดตั้งเข้าด้วยกัน</p></div>
+   <div><h4>เมนู</h4><div class="footer-links"><a href="#about">เกี่ยวกับเรา</a><a href="#services">บริการ</a><a href="#capabilities">ความเชี่ยวชาญ</a><a href="#projects">ผลงาน</a></div></div>
+   <div><h4>บริการ</h4><div class="footer-links"><a href="#services">ออกแบบวิศวกรรม</a><a href="#services">ผลิตและประกอบ</a><a href="#services">ติดตั้งระบบ</a><a href="#services">Automation</a></div></div>
+   <div><h4>ติดตามเรา</h4><div class="socials"><a href="#" aria-label="Facebook">f</a><a href="#" aria-label="Line">L</a><a href="#" aria-label="LinkedIn">in</a></div></div>
+  </div>
+  <div class="copyright"><span>© 2026 FOSTER ENGINEERING. All Rights Reserved.</span><span>Professional Engineering Solutions</span></div>
+ </div>
+</footer>
+
+<button class="top" id="topBtn">↑</button>
+
+<div class="modal" id="projectModal">
+ <div class="modal-box"><button class="modal-close" id="modalClose">×</button><img class="modal-img" id="modalImg" src="" alt=""><div class="modal-body"><small id="modalCat"></small><h3 id="modalTitle"></h3><p id="modalDesc"></p></div></div>
+</div>
+<div class="modal lightbox" id="lightbox"><button class="modal-close" id="lightClose">×</button><img id="lightImg" src="" alt=""></div>
+
+<script>
+const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
+
+window.addEventListener('load',()=>setTimeout(()=>$('#loader').classList.add('hide'),500));
+
+const header=$('#header'),topBtn=$('#topBtn');
+window.addEventListener('scroll',()=>{
+ header.classList.toggle('scrolled',scrollY>50);
+ topBtn.classList.toggle('show',scrollY>500);
+});
+topBtn.onclick=()=>scrollTo({top:0,behavior:'smooth'});
+
+const menuBtn=$('#menuBtn'),nav=$('#navLinks');
+menuBtn.onclick=()=>nav.classList.toggle('open');
+$$('.nav-links a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
+
+const observer=new IntersectionObserver(entries=>{
+ entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');observer.unobserve(e.target)}})
+},{threshold:.12});
+$$('.reveal').forEach(e=>observer.observe(e));
+
+let counted=false;
+const statsObserver=new IntersectionObserver(entries=>{
+ if(entries[0].isIntersecting&&!counted){
+  counted=true;
+  $$('[data-count]').forEach(el=>{
+   const target=+el.dataset.count;let n=0;
+   const step=Math.max(1,Math.ceil(target/45));
+   const timer=setInterval(()=>{n+=step;if(n>=target){n=target;clearInterval(timer)}el.textContent=n},25);
+  });
+ }
+},{threshold:.4});
+statsObserver.observe($('.stats'));
+
+$$('.filter button').forEach(btn=>btn.onclick=()=>{
+ $$('.filter button').forEach(x=>x.classList.remove('active'));btn.classList.add('active');
+ const f=btn.dataset.filter;
+ $$('.project').forEach(p=>{p.style.display=(f==='all'||p.dataset.cat===f)?'block':'none'})
+});
+
+const pm=$('#projectModal');
+$$('.project').forEach(card=>card.addEventListener('click',()=>{
+ $('#modalImg').src=card.querySelector('img').src;
+ $('#modalTitle').textContent=card.dataset.title;
+ $('#modalDesc').textContent=card.dataset.desc;
+ $('#modalCat').textContent=card.querySelector('small').textContent;
+ pm.classList.add('open');document.body.style.overflow='hidden';
+}));
+function closeProject(){pm.classList.remove('open');document.body.style.overflow=''}
+$('#modalClose').onclick=closeProject;
+pm.onclick=e=>{if(e.target===pm)closeProject()};
+
+const lb=$('#lightbox');
+$$('.gallery-item img').forEach(img=>img.onclick=()=>{
+ $('#lightImg').src=img.src;lb.classList.add('open');document.body.style.overflow='hidden';
+});
+function closeLight(){lb.classList.remove('open');document.body.style.overflow=''}
+$('#lightClose').onclick=closeLight;
+lb.onclick=e=>{if(e.target===lb)closeLight()};
+
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeProject();closeLight()}});
+
+$('#contactForm').addEventListener('submit',e=>{
+ e.preventDefault();
+ const name=e.target.name.value.trim();
+ alert(`ขอบคุณคุณ ${name || 'ลูกค้า'} ครับ\nได้รับข้อมูลโครงการเบื้องต้นแล้ว`);
+ e.target.reset();
+});
+</script>
+</body>
+</html>
